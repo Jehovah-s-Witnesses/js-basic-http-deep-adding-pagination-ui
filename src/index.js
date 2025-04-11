@@ -10,7 +10,7 @@ export const usersData = (page = 1) => {
 
 
   getItem(limit, offset).then((result) => {
-
+    console.log(result)
     const items = result.items;
     const count = result.count;
     currentPage = page;
