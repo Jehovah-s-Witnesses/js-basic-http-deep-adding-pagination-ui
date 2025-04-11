@@ -8,7 +8,9 @@ export let currentPage = 1;
 export const usersData = (page = 1) => {
   const offset = (page - 1) * limit;
 
+
   getItem(limit, offset).then((result) => {
+
     const items = result.items;
     const count = result.count;
     currentPage = page;

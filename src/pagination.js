@@ -15,41 +15,63 @@ export function renderPagination(currentPage, count, limit) {
   buttonContainer.innerHTML = '';
 
 
-  const previousButton = document.createElement('button');
-  previousButton.classList.add('previous');
-  previousButton.innerText = 'Previous';
+  const previousItemElement = document.createElement('li');
+  previousItemElement.classList.add('page-item');
+  const previousLinkElement = document.createElement('a');
+  previousLinkElement.classList.add('page-link');
+  previousLinkElement.innerText = 'Previous';
+
+  previousItemElement.append(previousLinkElement);
 
   if (currentPage === 1) {
-    previousButton.disabled = true;
+    previousItemElement.classList.add('disabled');
   }
 
-  previousButton.addEventListener('click', () => usersData(currentPage - 1));
+  previousLinkElement.addEventListener('click', (event) => {
+    event.preventDefault();
+    event.currentTarget.blur();
 
-  buttonContainer.append(previousButton);
+    usersData(currentPage - 1);
+  });
+
+  buttonContainer.append(previousItemElement);
 
   for (let i = 1; i <= totalPages; i++) {
     if (i === currentPage || i === currentPage - 1 || i === currentPage + 1) {
-      const button = document.createElement('button');
-      button.classList.add('current-btn');
-      button.innerText = `${i}`;
+      const currentItemElement = document.createElement('li');
+      currentItemElement.classList.add('current-btn', 'page-item');
+      const currentLinkElement = document.createElement('a');
+      currentLinkElement.classList.add('page-link');
+      currentLinkElement.innerText = `${i}`;
 
-      button.addEventListener('click', () => usersData(i));
+      currentItemElement.append(currentLinkElement);
 
-      buttonContainer.append(button);
+      currentItemElement.addEventListener('click', () => usersData(i));
+
+      buttonContainer.append(currentItemElement);
+
+      if (currentPage === i) {
+        currentItemElement.classList.add('active');
+      }
     }
+
   }
 
-  const nextButton = document.createElement('button');
-  nextButton.classList.add('next');
-  nextButton.innerText = 'Next';
+  const nextItemElement = document.createElement('li');
+  nextItemElement.classList.add('page-item');
+  const nextLinkElement = document.createElement('a');
+  nextLinkElement.classList.add('page-link');
+  nextLinkElement.innerText = 'Next';
+
+  nextItemElement.append(nextLinkElement);
 
   if (currentPage === totalPages) {
-    nextButton.disabled = true;
+    nextItemElement.classList.add('disabled');
   }
 
-  nextButton.addEventListener('click', () => usersData(currentPage + 1));
+  nextLinkElement.addEventListener('click', () => usersData(currentPage + 1));
 
-  buttonContainer.append(nextButton);
+  buttonContainer.append(nextItemElement);
 }
 
 /**
